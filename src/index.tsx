@@ -8,13 +8,13 @@ import './index.css';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
-
+// 💡 使用 Provider 將 App 包起來，可以帶入 configureStore 建立的 store
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

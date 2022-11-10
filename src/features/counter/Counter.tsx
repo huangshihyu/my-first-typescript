@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
@@ -8,16 +8,22 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
+  counterStatus,
 } from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
+  // 從 store 中 select 出想要的資料
   const count = useAppSelector(selectCount);
+  const status = useAppSelector(counterStatus);
+  //  用來 dispatch action
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
-
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
   return (
     <div>
       <div className={styles.row}>
@@ -54,12 +60,9 @@ export function Counter() {
           className={styles.asyncButton}
           onClick={() => dispatch(incrementAsync(incrementValue))}
         >
-          Add Async
+          {status === 'loading' ? status : 'Add Async'}
         </button>
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
+        <button className={styles.button} onClick={() => dispatch(incrementIfOdd(incrementValue))}>
           Add If Odd
         </button>
       </div>
